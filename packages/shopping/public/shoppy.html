@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+  Shoppy: The #1 online shopping destination
+  </title>
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="main" class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a id="logo" class="navbar-brand" href="/shoppy.html">Shoppy</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/shoppy.html">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Shopping Cart</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Log In</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+
+    <div id="content" class="container-fluid">
+
+<div class="card-deck">
+
+  <div class="card" style="width: 18rem;">
+    <img src="https://source.unsplash.com/random/800x600" class="card-img-top" alt="iPhone 11 Pro">
+    <div class="card-body">
+      <h5 class="card-title">iPhone 11 Pro</h5>
+      <p class="card-text">A new dual‑camera system captures more of what you see and love.</p>
+      <a href="#" class="btn btn-primary disabled">Add to Cart</a>
+      <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Details</a>
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">iPhone 11 Pro</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <img src="https://source.unsplash.com/random/800x600" class="details-img" alt="iPhone 11 Pro">
+      <div class="modal-body">
+A new dual‑camera system captures more of what you see and love. The fastest chip ever in a smartphone and all‑day battery life let you do more and charge less.
+      <ul>
+        <li>Released 2019, September. 188g, 8.1mm thickness. iOS 13, up to iOS 13.3. 64GB/256GB/512GB storage, no card slot.</li>
+        <li>12MP. 2160p.</li>
+        <li>5.8" 1125x2436 pixels.</li>
+        <li>4GB RAM. Apple A13 Bionic.</li>
+      </ul>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary disabled">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+
+  <div class="card" style="width: 18rem;">
+    <img src="https://source.unsplash.com/random/800x600" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="#" class="btn btn-primary disabled">Add to Cart</a>
+    </div>
+  </div>
+
+  <div class="card" style="width: 18rem;">
+    <img src="https://source.unsplash.com/random/800x600" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="#" class="btn btn-primary disabled">Add to Cart</a>
+    </div>
+  </div>
+
+  <div class="card" style="width: 18rem;">
+    <img src="https://source.unsplash.com/random/800x600" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="#" class="btn btn-primary disabled">Add to Cart</a>
+    </div>
+  </div>
+
+</div>
+    </div>
+  </div>
+</body>
+</html>

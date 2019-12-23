@@ -1,0 +1,17 @@
+#main {
+  padding: 0;
+}
+
+#logo {
+  font-family: 'Pacifico', cursive;
+  font-size: 28px;
+}
+
+#content {
+  margin: 17px 0;
+}
+
+.details-img {
+  height: 300px;
+  object-fit: cover;
+}
