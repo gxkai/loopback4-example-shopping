@@ -11,7 +11,23 @@
   margin: 17px 0;
 }
 
-.details-img {
+.product-img {
   height: 300px;
   object-fit: cover;
+}
+
+.card {
+  max-width: 290px;
+}
+
+.action-buttons {
+  position: relative;
+  bottom: 0;
+}
+
+.description {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }

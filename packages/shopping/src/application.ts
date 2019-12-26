@@ -5,7 +5,7 @@
 
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig, BindingKey} from '@loopback/core';
-import {RepositoryMixin} from '@loopback/repository';
+import {RepositoryMixin, SchemaMigrationOptions} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import {MyAuthenticationSequence} from './sequence';
@@ -36,6 +36,9 @@ import {
 } from '@loopback/authorization';
 import {createEnforcer} from './services/enforcer';
 import {CasbinAuthorizationProvider} from './services/authorizor';
+import {ProductRepository} from './repositories';
+import YAML = require('yamljs');
+import fs from 'fs';
 
 /**
  * Information from package.json
@@ -126,5 +129,26 @@ export class ShoppingApplication extends BootMixin(
     this.bind(PasswordHasherBindings.PASSWORD_HASHER).toClass(BcryptHasher);
 
     this.bind(UserServiceBindings.USER_SERVICE).toClass(MyUserService);
+  }
+
+  async migrateSchema(options?: SchemaMigrationOptions) {
+    await super.migrateSchema(options);
+
+    const productRepo = await this.getRepository(ProductRepository);
+    const found = await productRepo.findOne({});
+    if (!found) {
+      const productsDir = path.join(__dirname, '../fixtures/products');
+      const files = fs.readdirSync(productsDir);
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file.endsWith('.yml')) {
+          const productFile = path.join(productsDir, file);
+          const product = YAML.load(productFile);
+          await productRepo.create(product);
+        }
+      }
+    } else {
+      console.log('Products already populated');
+    }
   }
 }
