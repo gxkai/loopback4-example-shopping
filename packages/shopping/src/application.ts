@@ -135,20 +135,16 @@ export class ShoppingApplication extends BootMixin(
     await super.migrateSchema(options);
 
     const productRepo = await this.getRepository(ProductRepository);
-    const found = await productRepo.findOne({});
-    if (!found) {
-      const productsDir = path.join(__dirname, '../fixtures/products');
-      const files = fs.readdirSync(productsDir);
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        if (file.endsWith('.yml')) {
-          const productFile = path.join(productsDir, file);
-          const product = YAML.load(productFile);
-          await productRepo.create(product);
-        }
+    await productRepo.deleteAll();
+    const productsDir = path.join(__dirname, '../fixtures/products');
+    const files = fs.readdirSync(productsDir);
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (file.endsWith('.yml')) {
+        const productFile = path.join(productsDir, file);
+        const product = YAML.load(productFile);
+        await productRepo.create(product);
       }
-    } else {
-      console.log('Products already populated');
     }
   }
 }

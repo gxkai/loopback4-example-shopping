@@ -16,7 +16,7 @@
   object-fit: cover;
 }
 
-.card {
+#products .card {
   max-width: 290px;
 }
 
@@ -30,4 +30,13 @@
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+
+#product-header {
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+#pagination {
+  margin-top: 20px;
 }

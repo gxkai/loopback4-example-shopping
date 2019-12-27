@@ -2,7 +2,7 @@ const productTemplate = `
 <div class="card" style="width: 18rem;">
   <img src="#IMAGE#" class="card-img-top product-img" alt="#NAME#">
   <div class="card-body">
-    <h5 class="card-title">#NAME#</h5>
+    <h4 class="card-title">#NAME#</h4>
     <h5>$#PRICE#</h5>
     <p class="card-text description">#DESCRIPTION#</p>
     <div class="action-buttons">
@@ -14,7 +14,7 @@ const productTemplate = `
 `;
 
 $(function () {
-
+  const skip = (getCurrentPageNumber() - 1) * 4;
   api.getProducts(function (products) {
     if (products) {
       products.forEach(product => {
@@ -27,6 +27,7 @@ $(function () {
         $('#products').append(productHtml);
       });
     }
-  });
+  }, skip, itemsPerPage);
 
+  addPagination();
 });
