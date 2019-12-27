@@ -2,7 +2,7 @@ const productTemplate = `
 <div class="container">
   <div class="row">
     <div class="col-md">
-      <img src="#IMAGE#" class="card-img-top" alt="#NAME#">
+      <img src="#IMAGE#" class="card-img-top details-img" alt="#NAME#">
     </div>
     <div class="col-sm">
       <div class="container" id="product-header">
@@ -28,10 +28,10 @@ $(function () {
     api.getProduct(id, function (product) {
       if (product) {
         const productHtml = productTemplate.replace(/#NAME#/ig, product.name)
-                            .replace(/#PRICE#/ig, product.price)
+                            .replace(/#PRICE#/ig, new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 }).format(product.price))
                             .replace(/#IMAGE#/ig, product.image)
                             .replace(/#DESCRIPTION#/ig, product.description)
-                            .replace(/#DETAILS#/ig, product.details)
+                            .replace(/#DETAILS#/ig, parseYml(product.details))
                             .replace(/#ID#/ig, product.productId);
         $('#product').append(productHtml);
       }

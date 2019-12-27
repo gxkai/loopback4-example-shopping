@@ -36,6 +36,31 @@ function addPagination() {
   });
 }
 
+// Very very simple YML "parser"
+function parseYml(string) {
+  let parsed = '';
+  let ul = false;
+  string.split(/\n/g).forEach(para => {
+
+    if (para.startsWith('-')) {
+      parsed += '<ul>';
+      para.split('-').forEach(li => {
+        if (li) {
+          parsed += '<li>' + li + '</li>';
+        }
+      });
+      ul = true;
+    } else if (ul) {
+      parsed += '</ul>';
+      parsed += '<p>' + para + '</p>';
+      ul = false;
+    } else {
+      parsed += '<p>' + para + '</p>';
+    }
+  });
+  return parsed;
+}
+
 const api = {
   getProducts(cb, skip = 0, limit = 4) {
     const url = apiUrl + `/products?filter[skip]=${skip}&filter[limit]=${limit}`;
@@ -46,5 +71,4 @@ const api = {
     const url = apiUrl + '/products/' + id;
     $.get(url, cb);
   }
-
 }

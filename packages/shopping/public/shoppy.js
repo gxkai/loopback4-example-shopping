@@ -19,7 +19,7 @@ $(function () {
     if (products) {
       products.forEach(product => {
         const productHtml = productTemplate.replace(/#NAME#/ig, product.name)
-                            .replace(/#PRICE#/ig, product.price)
+                            .replace(/#PRICE#/ig, new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 }).format(product.price))
                             .replace(/#IMAGE#/ig, product.image)
                             .replace(/#DESCRIPTION#/ig, product.description)
                             .replace(/#DETAILS#/ig, product.details)

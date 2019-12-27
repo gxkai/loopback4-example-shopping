@@ -16,6 +16,11 @@
   object-fit: cover;
 }
 
+.details-img {
+  height: 400px;
+  object-fit: cover;
+}
+
 #products .card {
   max-width: 290px;
 }
