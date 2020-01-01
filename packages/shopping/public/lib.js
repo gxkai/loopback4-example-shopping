@@ -61,7 +61,77 @@ function parseYml(string) {
   return parsed;
 }
 
+function refreshLogInStatus() {
+  const token = localStorage.getItem('shoppyToken');
+  if (token) {
+    api.me(token, function(user) {
+      localStorage.setItem('shoppyUserName', user.name);
+      localStorage.setItem('shoppyUserId', user.id);
+      applyLoggedInUi(user);
+    }, function(err) {
+      applyLoggedOutUi();
+    });
+  } else {
+    applyLoggedOutUi();
+  }
+}
+
+function applyLoggedInUi(user) {
+  $('#logIn').hide();
+  $('#user strong').text(user.name);
+  $('#user, #logOut').show();
+}
+
+function applyLoggedOutUi() {
+  $('#logIn').show();
+  $('#user, #logOut').hide();
+}
+
+function logOut() {
+  localStorage.removeItem('shoppyToken');
+  refreshLogInStatus();
+}
+
+function logIn() {
+  const email = $('#logInEmail').val();
+  const password = $('#logInPassword').val();
+  api.logIn(email, password, function(res) {
+    const token = res.token;
+    localStorage.setItem('shoppyToken', token);
+    refreshLogInStatus();
+    $('#logInModal').modal('toggle');
+  }, function(err) {
+    $('#logInTitle').text('Invalid credentials');
+  });
+  return false;
+}
+
 const api = {
+  logIn(email, password, successCb, errCb) {
+    const url = apiUrl + '/users/login';
+    $.ajax({
+      type: 'POST',
+      url: url,
+      data: JSON.stringify({email,password}),
+      contentType: 'application/json',
+      success: successCb,
+      error: errCb
+    });
+  },
+
+  me(token, successCb, errCb) {
+    const url = apiUrl + '/users/me';
+    $.ajax({
+      type: 'GET',
+      url: url,
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      success: successCb,
+      error: errCb
+    });
+  },
+
   getProducts(cb, skip = 0, limit = 4) {
     const url = apiUrl + `/products?filter[skip]=${skip}&filter[limit]=${limit}`;
     $.get(url, cb);
@@ -72,3 +142,7 @@ const api = {
     $.get(url, cb);
   }
 }
+
+$(function () {
+  refreshLogInStatus();
+});

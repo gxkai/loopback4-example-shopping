@@ -45,3 +45,19 @@
 #pagination {
   margin-top: 20px;
 }
+
+#user {
+  position: relative;
+  right: 20px;
+}
+
+#user img {
+  width: 22px;
+  margin-right: 5px;
+  position: relative;
+  top: -1px;
+}
+
+#logIn, #logOut {
+  display: none;
+}
