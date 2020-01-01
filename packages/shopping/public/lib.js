@@ -61,19 +61,29 @@ function parseYml(string) {
   return parsed;
 }
 
-function refreshLogInStatus() {
+function isLoggedIn(cb) {
   const token = localStorage.getItem('shoppyToken');
   if (token) {
     api.me(token, function(user) {
+      cb(user);
+    }, function(fail) {
+      cb(false);
+    });
+  } else {
+    return cb(false);
+  }
+}
+
+function refreshLogInStatus() {
+  isLoggedIn(function(user) {
+    if (user) {
       localStorage.setItem('shoppyUserName', user.name);
       localStorage.setItem('shoppyUserId', user.id);
       applyLoggedInUi(user);
-    }, function(err) {
+    } else {
       applyLoggedOutUi();
-    });
-  } else {
-    applyLoggedOutUi();
-  }
+    }
+  });
 }
 
 function applyLoggedInUi(user) {
@@ -127,12 +137,18 @@ function signUp() {
 }
 
 function addToCart(name, price, unformattedPrice, image) {
-  $('#productImage').attr('src', image);
-  $('#productName').text(name);
-  $('#productPrice').text(price);
-  $('#unformattedPrice').val(unformattedPrice);
-  $('#itemQuantity').val(1);
-  $('#addToCartModal').modal('toggle');
+  isLoggedIn(function(user) {
+    if (user) {
+      $('#productImage').attr('src', image);
+      $('#productName').text(name);
+      $('#productPrice').text(price);
+      $('#unformattedPrice').val(unformattedPrice);
+      $('#itemQuantity').val(1);
+      $('#addToCartModal').modal('toggle');
+    } else {
+      $('#logInModal').modal('toggle');
+    }
+  });
 }
 
 function updatePrice(quantity) {
