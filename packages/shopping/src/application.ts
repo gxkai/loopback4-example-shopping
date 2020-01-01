@@ -5,7 +5,7 @@
 
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig, BindingKey} from '@loopback/core';
-import {RepositoryMixin, SchemaMigrationOptions} from '@loopback/repository';
+import {RepositoryMixin, SchemaMigrationOptions, model, property} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import {MyAuthenticationSequence} from './sequence';
@@ -17,16 +17,16 @@ import {
   TokenServiceBindings,
   UserServiceBindings,
   TokenServiceConstants,
+  PasswordHasherBindings,
 } from './keys';
 import {JWTService} from './services/jwt-service';
 import {MyUserService} from './services/user-service';
-
+import _ from 'lodash';
 import path from 'path';
 import {
   AuthenticationComponent,
   registerAuthenticationStrategy,
 } from '@loopback/authentication';
-import {PasswordHasherBindings} from './keys';
 import {BcryptHasher} from './services/hash.password.bcryptjs';
 import {JWTAuthenticationStrategy} from './authentication-strategies/jwt-strategy';
 import {SECURITY_SCHEME_SPEC} from './utils/security-spec';
@@ -36,9 +36,10 @@ import {
 } from '@loopback/authorization';
 import {createEnforcer} from './services/enforcer';
 import {CasbinAuthorizationProvider} from './services/authorizor';
-import {ProductRepository} from './repositories';
+import {ProductRepository, UserRepository} from './repositories';
 import YAML = require('yamljs');
 import fs from 'fs';
+import {User} from './models';
 
 /**
  * Information from package.json
@@ -51,6 +52,15 @@ export interface PackageInfo {
 export const PackageKey = BindingKey.create<PackageInfo>('application.package');
 
 const pkg: PackageInfo = require('../package.json');
+
+@model()
+export class NewUser extends User {
+  @property({
+    type: 'string',
+    required: true,
+  })
+  password: string;
+}
 
 export class ShoppingApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
@@ -137,13 +147,37 @@ export class ShoppingApplication extends BootMixin(
     const productRepo = await this.getRepository(ProductRepository);
     await productRepo.deleteAll();
     const productsDir = path.join(__dirname, '../fixtures/products');
-    const files = fs.readdirSync(productsDir);
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+    const productFiles = fs.readdirSync(productsDir);
+    for (let i = 0; i < productFiles.length; i++) {
+      const file = productFiles[i];
       if (file.endsWith('.yml')) {
         const productFile = path.join(productsDir, file);
         const product = YAML.load(productFile);
         await productRepo.create(product);
+      }
+    }
+
+    const passwordHasher = await this.get(PasswordHasherBindings.PASSWORD_HASHER);
+    const userRepo = await this.getRepository(UserRepository);
+    await userRepo.deleteAll();
+    const usersDir = path.join(__dirname, '../fixtures/users');
+    const userFiles = fs.readdirSync(usersDir);
+    for (let i = 0; i < userFiles.length; i++) {
+      const file = userFiles[i];
+      if (file.endsWith('.yml')) {
+        const userFile = path.join(usersDir, file);
+        const input = new NewUser(YAML.load(userFile));
+        const password = await passwordHasher.hashPassword(input.password);
+        input.password = password;
+        const user = await userRepo.create(
+          _.omit(input, 'password'),
+        );
+
+        await userRepo
+                .userCredentials(user.id)
+                .create({password});
+
+        console.log(user)
       }
     }
   }
