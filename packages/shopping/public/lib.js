@@ -77,13 +77,13 @@ function refreshLogInStatus() {
 }
 
 function applyLoggedInUi(user) {
-  $('#logIn').hide();
+  $('#logIn, #signUp').hide();
   $('#user strong').text(user.name);
   $('#user, #logOut').show();
 }
 
 function applyLoggedOutUi() {
-  $('#logIn').show();
+  $('#logIn, #signUp').show();
   $('#user, #logOut').hide();
 }
 
@@ -95,24 +95,56 @@ function logOut() {
 function logIn() {
   const email = $('#logInEmail').val();
   const password = $('#logInPassword').val();
-  api.logIn(email, password, function(res) {
+  api.logIn({email, password}, function(res) {
     const token = res.token;
     localStorage.setItem('shoppyToken', token);
     refreshLogInStatus();
     $('#logInModal').modal('toggle');
-  }, function(err) {
+  }, function(xhr) {
     $('#logInTitle').text('Invalid credentials');
   });
   return false;
 }
 
+function signUp() {
+  const firstName = $('#firstName').val();
+  const lastName = $('#lastName').val();
+  const email = $('#signUpEmail').val();
+  const password = $('#signUpPassword').val();
+  api.signUp({firstName, lastName, email, password}, function(res) {
+    api.logIn({email, password}, function(res) {
+      $('#signUpModal').modal('toggle');
+      const token = res.token;
+      localStorage.setItem('shoppyToken', token);
+      refreshLogInStatus();
+    }, function(err) {
+      alert(err);
+    });
+  }, function(xhr) {
+    $('#signUpTitle').text(xhr.responseJSON.error.message);
+  });
+  return false;
+}
+
 const api = {
-  logIn(email, password, successCb, errCb) {
+  signUp(body, successCb, errCb) {
+    const url = apiUrl + '/users';
+    $.ajax({
+      type: 'POST',
+      url: url,
+      data: JSON.stringify(body),
+      contentType: 'application/json',
+      success: successCb,
+      error: errCb
+    });
+  },
+
+  logIn(body, successCb, errCb) {
     const url = apiUrl + '/users/login';
     $.ajax({
       type: 'POST',
       url: url,
-      data: JSON.stringify({email,password}),
+      data: JSON.stringify(body),
       contentType: 'application/json',
       success: successCb,
       error: errCb
@@ -144,5 +176,6 @@ const api = {
 }
 
 $(function () {
+  $('#navBar').append(navBarTemplate);
   refreshLogInStatus();
 });
