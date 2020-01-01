@@ -12,7 +12,7 @@ const productTemplate = `
             <h5>$#PRICE#</h5>
           </div>
           <div class="col col-3">
-            <a href="#" class="btn btn-primary disabled">Add to Cart</a>
+            <a href="javascript: addToCart('#NAME#', '#PRICE#', #UNFORMATTED-PRICE#)" class="btn btn-primary">Add to Cart</a>
           </div>
         </div>
       </div>
@@ -29,11 +29,13 @@ $(function () {
       if (product) {
         const productHtml = productTemplate.replace(/#NAME#/ig, product.name)
                             .replace(/#PRICE#/ig, new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 }).format(product.price))
+                            .replace(/#UNFORMATTED-PRICE#/g, product.price)
                             .replace(/#IMAGE#/ig, product.image)
                             .replace(/#DESCRIPTION#/ig, product.description)
                             .replace(/#DETAILS#/ig, parseYml(product.details))
                             .replace(/#ID#/ig, product.productId);
         $('#product').append(productHtml);
+        $('#product').append(addToCartTemplate);
       }
     });
   } else {

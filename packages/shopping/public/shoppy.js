@@ -6,7 +6,7 @@ const productTemplate = `
     <h5>$#PRICE#</h5>
     <p class="card-text description">#DESCRIPTION#</p>
     <div class="action-buttons">
-      <a href="#" class="btn btn-primary disabled">Add to Cart</a>
+      <a href="javascript: addToCart('#NAME#', '#PRICE#', #UNFORMATTED-PRICE#)" class="btn btn-primary">Add to Cart</a>
       <a href="/product.html?id=#ID#" class="btn btn-primary">Details</a>
     </div>
   </div>
@@ -20,12 +20,14 @@ $(function () {
       products.forEach(product => {
         const productHtml = productTemplate.replace(/#NAME#/ig, product.name)
                             .replace(/#PRICE#/ig, new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 }).format(product.price))
+                            .replace(/#UNFORMATTED-PRICE#/g, product.price)
                             .replace(/#IMAGE#/ig, product.image)
                             .replace(/#DESCRIPTION#/ig, product.description)
                             .replace(/#DETAILS#/ig, product.details)
                             .replace(/#ID#/ig, product.productId);
         $('#products').append(productHtml);
       });
+      $('#products').append(addToCartTemplate);
     }
   }, skip, itemsPerPage);
 

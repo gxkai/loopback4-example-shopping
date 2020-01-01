@@ -94,3 +94,34 @@ const navBarTemplate = `
         </form>
       </div>
 `;
+
+const addToCartTemplate = `
+<div class="modal fade" id="addToCartModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="productName" class="modal-title"></h5>
+        <h5 class="modal-title">$<span id="productPrice"></span></h5>
+      </div>
+      <div class="modal-body">
+
+<form class="form-inline" style="justify-content: center">
+  <label class="my-1 mr-2" for="itemQuantity">Qauntity</label>
+  <input type="hidden" id="unformattedPrice">
+  <select class="custom-select my-1 mr-sm-2" id="itemQuantity" onchange="updatePrice(this.value)">
+    <option selected value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+</form>
+
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button type="button" class="btn btn-primary">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

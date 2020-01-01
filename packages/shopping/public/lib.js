@@ -126,6 +126,20 @@ function signUp() {
   return false;
 }
 
+function addToCart(name, price, unformattedPrice) {
+  $('#productName').text(name);
+  $('#productPrice').text(price);
+  $('#unformattedPrice').val(unformattedPrice);
+  $('#addToCartModal').modal('toggle');
+}
+
+function updatePrice(quantity) {
+  const unitPrice = $('#unformattedPrice').val();
+  const total = unitPrice * quantity;
+  const formattedPrice = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 }).format(total);
+  $('#productPrice').text(formattedPrice);
+}
+
 const api = {
   signUp(body, successCb, errCb) {
     const url = apiUrl + '/users';
