@@ -126,10 +126,12 @@ function signUp() {
   return false;
 }
 
-function addToCart(name, price, unformattedPrice) {
+function addToCart(name, price, unformattedPrice, image) {
+  $('#productImage').attr('src', image);
   $('#productName').text(name);
   $('#productPrice').text(price);
   $('#unformattedPrice').val(unformattedPrice);
+  $('#itemQuantity').val(1);
   $('#addToCartModal').modal('toggle');
 }
 

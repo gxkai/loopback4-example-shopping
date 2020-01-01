@@ -100,7 +100,8 @@ const addToCartTemplate = `
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 id="productName" class="modal-title"></h5>
+        <img id="productImage">
+        <h4 id="productName" class="modal-title"></h4>
         <h5 class="modal-title">$<span id="productPrice"></span></h5>
       </div>
       <div class="modal-body">

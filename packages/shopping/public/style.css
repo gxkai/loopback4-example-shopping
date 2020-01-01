@@ -42,6 +42,13 @@
   margin-bottom: 20px;
 }
 
+#productImage {
+  border-radius: 3px;
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+}
+
 #pagination {
   margin-top: 20px;
 }
