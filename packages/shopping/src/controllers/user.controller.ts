@@ -158,6 +158,15 @@ export class UserController {
     delete currentUserProfile[securityId];
     return currentUserProfile;
   }
+  @get('/users/my')
+  getCurrentUser() {
+      return {
+          user: {
+              id: 1,
+              name: 111
+          }
+      }
+  }
 
   @get('/users/{userId}/recommend', {
     responses: {
