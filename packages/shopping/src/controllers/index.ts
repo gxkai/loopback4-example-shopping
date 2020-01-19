@@ -8,3 +8,4 @@ export * from './user.controller';
 export * from './shopping-cart.controller';
 export * from './user-order.controller';
 export * from './category.controller';
+export * from './article.controller';

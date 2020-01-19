@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import { Entity, hasMany, model, property } from '@loopback/repository'
+import { Order } from './order.model'
+import { Article } from './article.model'
 
 @model({
     settings: {
@@ -25,6 +27,9 @@ import {Entity, model, property} from '@loopback/repository';
     required: true,
   })
   name: string;
+
+  @hasMany(() => Article)
+  articles: Article[];
 
   // Define well-known properties here
 
