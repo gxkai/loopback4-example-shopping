@@ -151,21 +151,14 @@ export class UserController {
   async printCurrentUser(
     @inject(SecurityBindings.USER)
     currentUserProfile: UserProfile,
-  ): Promise<UserProfile> {
+  ): Promise<Object> {
     // (@jannyHou)FIXME: explore a way to generate OpenAPI schema
     // for symbol property
     currentUserProfile.id = currentUserProfile[securityId];
     delete currentUserProfile[securityId];
-    return currentUserProfile;
-  }
-  @get('/users/my')
-  getCurrentUser() {
-      return {
-          user: {
-              id: 1,
-              name: 111
-          }
-      }
+    return {
+        user: currentUserProfile
+    };
   }
 
   @get('/users/{userId}/recommend', {
@@ -223,5 +216,9 @@ export class UserController {
     const token = await this.jwtService.generateToken(userProfile);
 
     return {token};
+  }
+  @post('/users/logout')
+  logout() {
+      return null
   }
 }
