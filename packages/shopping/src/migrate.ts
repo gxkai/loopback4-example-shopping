@@ -2,7 +2,8 @@ import {ShoppingApplication} from './application';
 import { CategoryRepository } from './repositories'
 import { Category } from './models'
 export async function migrate(args: string[]) {
-  const existingSchema = args.includes('--rebuild') ? 'drop' : 'alter';
+  console.log(args)
+  const existingSchema = args.includes('rebuild') ? 'drop' : 'alter';
   console.log('Migrating schemas (%s existing schema)', existingSchema);
   const app = new ShoppingApplication();
   await app.boot();

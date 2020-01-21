@@ -5,8 +5,7 @@ import { Category } from './category.model'
 export class Article extends Entity {
   @property({
     type: 'string',
-    id: true,
-    generated: true,
+    id: true
   })
   id?: string;
   @belongsTo(() => Category)
@@ -17,6 +16,12 @@ export class Article extends Entity {
     required: true,
   })
   title: string;
+
+  @property({
+    type: 'string',
+    default: new Date()
+  })
+  created: string;
 
   @property({
     type: 'string',

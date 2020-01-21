@@ -1,24 +1,11 @@
-import { Entity, hasMany, model, property } from '@loopback/repository'
-import { Order } from './order.model'
-import { Article } from './article.model'
+import {Entity, model, property} from '@loopback/repository';
 
-@model({
-    settings: {
-        indexes: {
-            uniqueName: {
-                keys: {
-                    name: 1,
-                },
-                options: {
-                    unique: true,
-                },
-            },
-        },
-    },
-})export class Category extends Entity {
+@model({settings: {strict: false}})
+export class Category extends Entity {
   @property({
     type: 'string',
     id: true,
+    generated: true,
   })
   id?: string;
 
@@ -28,8 +15,11 @@ import { Article } from './article.model'
   })
   name: string;
 
-  @hasMany(() => Article)
-  articles: Article[];
+  @property({
+    type: 'string',
+    required: true,
+  })
+  iconUrl: string;
 
   // Define well-known properties here
 

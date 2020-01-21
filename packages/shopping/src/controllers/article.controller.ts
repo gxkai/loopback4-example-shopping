@@ -19,6 +19,7 @@ import {
 } from '@loopback/rest';
 import {Article} from '../models';
 import {ArticleRepository} from '../repositories';
+import { authenticate } from '@loopback/authentication'
 
 export class ArticleController {
   constructor(
@@ -34,13 +35,14 @@ export class ArticleController {
       },
     },
   })
+  @authenticate('jwt')
   async create(
     @requestBody({
       content: {
         'application/json': {
           schema: getModelSchemaRef(Article, {
             title: 'NewArticle',
-            exclude: ['id'],
+            exclude: ['id', 'created'],
           }),
         },
       },
@@ -84,7 +86,7 @@ export class ArticleController {
   ): Promise<Article[]> {
     return this.articleRepository.find(filter);
   }
-
+  @authenticate('jwt')
   @patch('/articles', {
     responses: {
       '200': {
@@ -125,7 +127,6 @@ export class ArticleController {
   ): Promise<Article> {
     return this.articleRepository.findById(id, filter);
   }
-
   @patch('/articles/{id}', {
     responses: {
       '204': {
@@ -133,6 +134,7 @@ export class ArticleController {
       },
     },
   })
+  @authenticate('jwt')
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -154,6 +156,7 @@ export class ArticleController {
       },
     },
   })
+  @authenticate('jwt')
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() article: Article,
@@ -168,6 +171,7 @@ export class ArticleController {
       },
     },
   })
+  @authenticate('jwt')
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.articleRepository.deleteById(id);
   }

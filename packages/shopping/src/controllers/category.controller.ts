@@ -19,6 +19,7 @@ import {
 } from '@loopback/rest';
 import {Category} from '../models';
 import {CategoryRepository} from '../repositories';
+import { authenticate } from '@loopback/authentication'
 
 export class CategoryController {
   constructor(
@@ -34,6 +35,7 @@ export class CategoryController {
       },
     },
   })
+  @authenticate('jwt')
   async create(
     @requestBody({
       content: {
@@ -133,6 +135,7 @@ export class CategoryController {
       },
     },
   })
+  @authenticate('jwt')
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
@@ -154,6 +157,7 @@ export class CategoryController {
       },
     },
   })
+  @authenticate('jwt')
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() category: Category,
@@ -168,6 +172,7 @@ export class CategoryController {
       },
     },
   })
+  @authenticate('jwt')
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.categoryRepository.deleteById(id);
   }
