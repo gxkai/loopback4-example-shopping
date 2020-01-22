@@ -11,3 +11,6 @@ export * from './product.model';
 export * from './user-credentials.model';
 export * from './category.model';
 export * from './article.model';
+export * from './nba-championship-history.model';
+export * from './dota-champion-history.model';
+export * from './dota-2-champion-history.model';

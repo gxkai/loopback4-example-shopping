@@ -9,3 +9,6 @@ export * from './shopping-cart.controller';
 export * from './user-order.controller';
 export * from './category.controller';
 export * from './article.controller';
+export * from './script.controller';
+export * from './nba-champion-history.controller';
+export * from './dota-2-champion-history.controller';

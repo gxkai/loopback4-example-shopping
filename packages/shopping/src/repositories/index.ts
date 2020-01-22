@@ -9,3 +9,6 @@ export * from './order.repository';
 export * from './user-credentials.repository';
 export * from './category.repository';
 export * from './article.repository';
+export * from './nba-championship-history.repository';
+export * from './dota-champion-history.repository';
+export * from './dota-2-champion-history.repository';
